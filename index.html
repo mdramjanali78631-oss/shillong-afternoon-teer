@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,6 +92,60 @@
       padding: 8px 6px;
     }
 
+    /* Common Number Section always visible below result */
+    .common-section {
+      margin-bottom: 20px;
+      border: 1px solid #777777;
+      background-color: #fafafa;
+      padding: 10px;
+    }
+
+    .section-heading {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #111111;
+    }
+
+    .sub-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      background: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .sub-table th,
+    .sub-table td {
+      border: 1px solid #666666;
+      padding: 6px;
+      font-size: 15px;
+    }
+
+    .sub-table th {
+      background-color: #00d2a8;
+      color: #111111;
+      font-weight: 600;
+    }
+
+    .number-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      padding-top: 4px;
+    }
+
+    .number-list li {
+      border: 1px solid #666666;
+      background-color: #ffffff;
+      padding: 4px 10px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
     /* Info / Article Section */
     .info-section {
       padding: 4px 4px 18px;
@@ -164,7 +217,7 @@
     .c-formula { background-color: #673ab7; }
     .c-target { background-color: #f50087; }
 
-    /* Dynamic Panel (Common Number Table, Previous Results, etc.) */
+    /* Dynamic Panel for other grid cards */
     .panel-box {
       margin-top: 18px;
       border: 1px solid #888888;
@@ -200,83 +253,6 @@
       font-size: 13px;
       cursor: pointer;
     }
-
-    .sub-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: center;
-      background: #ffffff;
-      margin-bottom: 10px;
-    }
-
-    .sub-table th,
-    .sub-table td {
-      border: 1px solid #666666;
-      padding: 6px;
-      font-size: 15px;
-    }
-
-    .sub-table th {
-      background-color: #00d2a8;
-      color: #111111;
-      font-weight: 600;
-    }
-
-    /* Easy Result Editor Box at Bottom */
-    .editor-toggle {
-      margin-top: 22px;
-      text-align: center;
-    }
-
-    .editor-btn {
-      background-color: #eef5fc;
-      color: #111111;
-      border: 1px solid #7ab5e8;
-      padding: 7px 14px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .editor-panel {
-      display: none;
-      margin-top: 12px;
-      border: 1px solid #777777;
-      padding: 12px;
-      background: #f9f9f9;
-    }
-
-    .editor-panel.active {
-      display: block;
-    }
-
-    .editor-row {
-      margin-bottom: 8px;
-    }
-
-    .editor-row label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
-
-    .editor-row input {
-      width: 100%;
-      padding: 6px 8px;
-      border: 1px solid #888888;
-      font-size: 14px;
-    }
-
-    .save-btn {
-      background-color: #00b894;
-      color: #ffffff;
-      border: none;
-      padding: 8px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-    }
   </style>
 </head>
 <body>
@@ -297,7 +273,7 @@
     <!-- Date -->
     <div class="date-heading" id="displayDate">22/11/2026</div>
 
-    <!-- Main Result Table (Exact Reference Layout & Colors) -->
+    <!-- Main Result Table (Top Rounds, Bottom Result Cells) -->
     <table class="result-table" aria-label="Shillong Afternoon Teer Result">
       <tr>
         <th colspan="2" class="table-sub-title">Shillong Afternoon Teer</th>
@@ -312,6 +288,22 @@
       </tr>
     </table>
 
+    <!-- Common Number Table & List Directly Below Result -->
+    <section class="common-section" id="commonNumberSection" aria-label="Common Number Table and List">
+      <h2 class="section-heading">Common Number</h2>
+      <table class="sub-table">
+        <tr>
+          <th>House</th>
+          <th>Ending</th>
+        </tr>
+        <tr>
+          <td id="houseCell">2, 7, 4</td>
+          <td id="endingCell">4, 8, 9</td>
+        </tr>
+      </table>
+      <ul class="number-list" id="commonNumberList"></ul>
+    </section>
+
     <!-- Info Text -->
     <section class="info-section">
       <h1 class="info-title">Shillong Afternoon Teer: Daily Results &amp; Numbers</h1>
@@ -322,8 +314,7 @@
 
     <!-- 3x3 Colorful Grid -->
     <section class="grid-3x3" aria-label="Teer Tools and Sections">
-      <!-- 1. Common Number -->
-      <button type="button" class="grid-card c-common" onclick="openPanel('common')">
+      <button type="button" class="grid-card c-common" onclick="document.getElementById('commonNumberSection').scrollIntoView({behavior:'smooth'})">
         <svg viewBox="0 0 100 100">
           <circle cx="50" cy="46" r="34" fill="none" stroke="#2c2c2c" stroke-width="6"/>
           <path d="M63 33 A18 18 0 1 0 63 59" fill="none" stroke="#2c2c2c" stroke-width="7" stroke-linecap="round"/>
@@ -331,7 +322,6 @@
         <span class="card-label">Common Number</span>
       </button>
 
-      <!-- 2. BLOG -->
       <button type="button" class="grid-card c-blog" onclick="openPanel('blog')">
         <svg viewBox="0 0 120 90">
           <rect x="12" y="24" width="22" height="32" fill="#e53935"/>
@@ -346,7 +336,6 @@
         <span class="card-label">BLOG</span>
       </button>
 
-      <!-- 3. Dream Number -->
       <button type="button" class="grid-card c-dream" onclick="openPanel('dream')">
         <svg viewBox="0 0 100 100">
           <rect x="20" y="14" width="38" height="62" fill="none" stroke="#222" stroke-width="4"/>
@@ -357,7 +346,6 @@
         <span class="card-label">Dream Number</span>
       </button>
 
-      <!-- 4. Analytics -->
       <button type="button" class="grid-card c-analytics" onclick="openPanel('analytics')">
         <svg viewBox="0 0 100 100">
           <circle cx="52" cy="48" r="28" fill="#ff9800"/>
@@ -370,7 +358,6 @@
         <span class="card-label">Analytics</span>
       </button>
 
-      <!-- 5. Predict Target -->
       <button type="button" class="grid-card c-predict" onclick="openPanel('predict')">
         <svg viewBox="0 0 120 90">
           <path d="M15 22 H82 L94 28 L82 34 H15 Z" fill="#f5b041"/>
@@ -383,7 +370,6 @@
         <span class="card-label">Predict Target</span>
       </button>
 
-      <!-- 6. Previous Result -->
       <button type="button" class="grid-card c-previous" onclick="openPanel('previous')">
         <svg viewBox="0 0 100 100">
           <rect x="20" y="14" width="60" height="62" rx="6" fill="#111111"/>
@@ -397,7 +383,6 @@
         <span class="card-label">Previous Result</span>
       </button>
 
-      <!-- 7. Calendar -->
       <button type="button" class="grid-card c-calendar" onclick="openPanel('calendar')">
         <svg viewBox="0 0 100 100">
           <rect x="20" y="20" width="60" height="56" rx="5" fill="#111111"/>
@@ -411,7 +396,6 @@
         <span class="card-label">Calendar</span>
       </button>
 
-      <!-- 8. Formula -->
       <button type="button" class="grid-card c-formula" onclick="openPanel('formula')">
         <svg viewBox="0 0 100 100">
           <path d="M50 16 A34 34 0 1 0 84 50" fill="none" stroke="#d1c4e9" stroke-width="8"/>
@@ -421,7 +405,6 @@
         <span class="card-label">Formula</span>
       </button>
 
-      <!-- 9. Target -->
       <button type="button" class="grid-card c-target" onclick="openPanel('target')">
         <svg viewBox="0 0 100 100">
           <circle cx="50" cy="46" r="32" fill="#ffffff"/>
@@ -433,34 +416,13 @@
       </button>
     </section>
 
-    <!-- Dynamic Detail Panel (Common Number Table & Others) -->
+    <!-- Dynamic Detail Panel -->
     <div id="detailPanel" class="panel-box" aria-live="polite">
       <div class="panel-header">
-        <div id="panelTitle" class="panel-title">Common Number</div>
+        <div id="panelTitle" class="panel-title">Details</div>
         <button type="button" class="close-btn" onclick="closePanel()">Close</button>
       </div>
       <div id="panelContent"></div>
-    </div>
-
-    <!-- Quick Result Editor Helper -->
-    <div class="editor-toggle">
-      <button type="button" class="editor-btn" onclick="toggleEditor()">Update Result Values (Preview / Edit Helper)</button>
-    </div>
-
-    <div id="editorPanel" class="editor-panel">
-      <div class="editor-row">
-        <label for="inputDate">Date (DD/MM/YYYY)</label>
-        <input type="text" id="inputDate" />
-      </div>
-      <div class="editor-row">
-        <label for="inputFR">F/R (04:45 PM)</label>
-        <input type="text" id="inputFR" maxlength="2" />
-      </div>
-      <div class="editor-row">
-        <label for="inputSR">S/R (05:45 PM)</label>
-        <input type="text" id="inputSR" maxlength="2" />
-      </div>
-      <button type="button" class="save-btn" onclick="applyResultUpdate()">Apply on Page</button>
     </div>
   </main>
 
@@ -487,14 +449,18 @@
       ]
     };
 
-    function renderMainResult() {
+    function renderPageData() {
       document.getElementById("displayDate").textContent = DAILY_RESULT.date;
       document.getElementById("frValue").textContent = DAILY_RESULT.fr;
       document.getElementById("srValue").textContent = DAILY_RESULT.sr;
 
-      document.getElementById("inputDate").value = DAILY_RESULT.date;
-      document.getElementById("inputFR").value = DAILY_RESULT.fr === "--" ? "" : DAILY_RESULT.fr;
-      document.getElementById("inputSR").value = DAILY_RESULT.sr === "--" ? "" : DAILY_RESULT.sr;
+      document.getElementById("houseCell").textContent = DAILY_RESULT.houses.join(", ");
+      document.getElementById("endingCell").textContent = DAILY_RESULT.endings.join(", ");
+
+      const listEl = document.getElementById("commonNumberList");
+      listEl.innerHTML = DAILY_RESULT.directNumbers
+        .map(num => `<li>${num}</li>`)
+        .join("");
     }
 
     function openPanel(type) {
@@ -502,29 +468,7 @@
       const title = document.getElementById("panelTitle");
       const content = document.getElementById("panelContent");
 
-      if (type === "common") {
-        title.textContent = "Common Number — " + DAILY_RESULT.date;
-        content.innerHTML = `
-          <table class="sub-table">
-            <tr>
-              <th>House</th>
-              <th>Ending</th>
-            </tr>
-            <tr>
-              <td>${DAILY_RESULT.houses.join(" , ")}</td>
-              <td>${DAILY_RESULT.endings.join(" , ")}</td>
-            </tr>
-          </table>
-          <table class="sub-table">
-            <tr>
-              <th>Direct Common Numbers</th>
-            </tr>
-            <tr>
-              <td><strong>${DAILY_RESULT.directNumbers.join(" &nbsp;|&nbsp; ")}</strong></td>
-            </tr>
-          </table>
-        `;
-      } else if (type === "dream") {
+      if (type === "dream") {
         title.textContent = "Dream Number Chart";
         const rows = DAILY_RESULT.dreamNumbers
           .map(item => `<tr><td>${item.dream}</td><td><strong>${item.numbers}</strong></td></tr>`)
@@ -568,23 +512,8 @@
       document.getElementById("detailPanel").classList.remove("active");
     }
 
-    function toggleEditor() {
-      document.getElementById("editorPanel").classList.toggle("active");
-    }
-
-    function applyResultUpdate() {
-      const d = document.getElementById("inputDate").value.trim();
-      const fr = document.getElementById("inputFR").value.trim();
-      const sr = document.getElementById("inputSR").value.trim();
-
-      if (d) DAILY_RESULT.date = d;
-      DAILY_RESULT.fr = fr || "--";
-      DAILY_RESULT.sr = sr || "--";
-      renderMainResult();
-    }
-
-    renderMainResult();
+    renderPageData();
   </script>
 </body>
-    </html>
-    
+        </html>
+  
